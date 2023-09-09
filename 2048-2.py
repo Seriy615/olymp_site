@@ -19,10 +19,7 @@ pygame.display.set_caption("2048")
 # Шрифт для текста
 font = pygame.font.Font(None, 36)
 
-# Инициализация игрового поля
-board = [[0] * 4 for _ in range(4)]
-add_random_tile(board)
-add_random_tile(board)
+
 
 # Функция для добавления случайного числа на поле
 def add_random_tile(board):
@@ -30,7 +27,10 @@ def add_random_tile(board):
     if empty_cells:
         i, j = random.choice(empty_cells)
         board[i][j] = random.choice([2, 4])
-
+# Инициализация игрового поля
+board = [[0] * 4 for _ in range(4)]
+add_random_tile(board)
+add_random_tile(board)
 # Проверка доступных ходов
 def can_move(board, new_board):
     for i in range(4):
@@ -135,7 +135,6 @@ while running:
                 error_text = font.render("Невозможно сделать ход!", True, (255, 0, 0))
     # Отображение игрового поля и текста ошибки
     draw_board(board)
-    screen.blit(error_text, error_text_rect)
     pygame.display.flip()
 
     # Проверка условия поражения и завершение игры
