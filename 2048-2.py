@@ -20,7 +20,17 @@ pygame.display.set_caption("2048")
 # Шрифт для текста
 font = pygame.font.Font(None, 36)
 
+# Функция для отображения очков на экране
+def display_points(points):
+    points_text = font.render(f"Очки: {points}", True, text_color)
+    screen.blit(points_text, (10, 410))
 
+# Функция для обновления экрана
+def update_screen():
+    screen.fill((0, 0, 0))  # Очистка экрана
+    display_points(points)  # Отображение очков
+    draw_board(board)
+    pygame.display.flip()
 
 # Функция для добавления случайного числа на поле
 def add_random_tile(board):
@@ -138,12 +148,12 @@ while running:
                 print("НЕВОЗМОЖНО СДЕЛАТЬ ХОД!!!!!!!")
                 points-=25
     # Отображение игрового поля и текста ошибки
-    draw_board(board)
-    pygame.display.flip()
+    update_screen()
 
     # Проверка условия поражения и завершение игры
     if is_game_over(board):
         print('ПРОИГРАЛИ!!!!!!')
         running = False
+        points-=200
         time.sleep(2)
 pygame.quit()
