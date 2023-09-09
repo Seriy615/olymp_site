@@ -19,7 +19,10 @@ pygame.display.set_caption("2048")
 # Шрифт для текста
 font = pygame.font.Font(None, 36)
 
-
+# Инициализация игрового поля
+board = [[0] * 4 for _ in range(4)]
+add_random_tile(board)
+add_random_tile(board)
 
 # Функция для добавления случайного числа на поле
 def add_random_tile(board):
@@ -27,10 +30,25 @@ def add_random_tile(board):
     if empty_cells:
         i, j = random.choice(empty_cells)
         board[i][j] = random.choice([2, 4])
-# Инициализация игрового поля
-board = [[0] * 4 for _ in range(4)]
-add_random_tile(board)
-add_random_tile(board)
+
+# Проверка доступных ходов
+def can_move(board, new_board):
+    for i in range(4):
+        for j in range(4):
+            if new_board[i][j] != board[i][j]:
+                return True
+    return False
+
+# Проверка поражения
+def is_game_over(board):
+    if any(0 in row for row in board):
+        return False
+    for i in range(4):
+        for j in range(3):
+            if board[i][j] == board[i][j + 1] or board[j][i] == board[j + 1][i]:
+                return False
+    return True
+
 # Отображение игрового поля
 def draw_board(board):
     for i in range(4):
@@ -40,6 +58,7 @@ def draw_board(board):
                 text = font.render(str(board[i][j]), True, BLACK)
                 text_rect = text.get_rect(center=(j * 100 + 50, i * 100 + 50))
                 screen.blit(text, text_rect)
+
 def slide_left(board):
     for row in board:
         # Сжимаем ряд влево
@@ -78,19 +97,6 @@ def move_down(board):
     mirror_board(board)
     transpose_board(board)
 
-def is_game_over(board):
-    # Проверяем условие победы (наличие 2048)
-    for row in board:
-        if 2048 in row:
-            return True
-
-    # Проверяем, есть ли еще ходы (нет пустых ячеек и нет соседних равных чисел)
-    for i in range(4):
-        for j in range(3):
-            if board[i][j] == board[i][j + 1] or board[j][i] == board[j + 1][i]:
-                return False
-
-    return True
 
 def transpose_board(board):
     # Транспонируем доску (строки становятся столбцами)
@@ -107,33 +113,43 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
+            temp_board = [row[:] for row in board]  # Создаем резервную копию
             if event.key == pygame.K_LEFT:
                 # Обработка движения влево
-                # Допишите здесь код для движения влево
-                move_left(board)
-                add_random_tile(board)
-                pass
+                slide_left(board)
+                merge_left(board)
+                slide_left(board)
             elif event.key == pygame.K_RIGHT:
                 # Обработка движения вправо
-                # Допишите здесь код для движения вправо
-                move_right(board)
-                add_random_tile(board)
-                pass
+                slide_right(board)
+                merge_right(board)
+                slide_right(board)
             elif event.key == pygame.K_UP:
                 # Обработка движения вверх
-                # Допишите здесь код для движения вверх
-                move_up(board)
-                add_random_tile(board)
-                pass
+                transpose_board(board)
+                slide_left(board)
+                merge_left(board)
+                slide_left(board)
+                transpose_board(board)
             elif event.key == pygame.K_DOWN:
                 # Обработка движения вниз
-                # Допишите здесь код для движения вниз
-                move_down(board)
+                transpose_board(board)
+                slide_right(board)
+                merge_right(board)
+                slide_right(board)
+                transpose_board(board)
+            
+            # Проверка доступности хода перед выполнением
+            if can_move(temp_board, board):
                 add_random_tile(board)
-                pass
 
     # Отображение игрового поля
     draw_board(board)
     pygame.display.flip()
+
+    # Проверка условия поражения и завершение игры
+    if is_game_over(board):
+        print("Игра окончена. Вы проиграли!")
+        running = False
 
 pygame.quit()
