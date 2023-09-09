@@ -110,18 +110,22 @@ while running:
             if event.key == pygame.K_LEFT:
                 # Обработка движения влево
                 # Допишите здесь код для движения влево
+                move_left(board)
                 pass
             elif event.key == pygame.K_RIGHT:
                 # Обработка движения вправо
                 # Допишите здесь код для движения вправо
+                move_right(board)
                 pass
             elif event.key == pygame.K_UP:
                 # Обработка движения вверх
                 # Допишите здесь код для движения вверх
+                move_up(board)
                 pass
             elif event.key == pygame.K_DOWN:
                 # Обработка движения вниз
                 # Допишите здесь код для движения вниз
+                move_down(board)
                 pass
 
     # Отображение игрового поля
