@@ -5,7 +5,7 @@ import time
 
 # Инициализация Pygame
 pygame.init()
-
+points=0
 # Размер окна
 WINDOW_SIZE = (400, 400)
 
@@ -72,6 +72,8 @@ def merge_left(board):
             if row[i] == row[i + 1] and row[i] != 0:
                 row[i] *= 2
                 row[i + 1] = 0
+                points+=50
+                
 
 def move_left(board):
     slide_left(board)
@@ -134,6 +136,7 @@ while running:
             else:
                 # Отображение ошибки
                 print("НЕВОЗМОЖНО СДЕЛАТЬ ХОД!!!!!!!")
+                points-=25
     # Отображение игрового поля и текста ошибки
     draw_board(board)
     pygame.display.flip()
