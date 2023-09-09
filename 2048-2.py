@@ -116,28 +116,16 @@ while running:
             temp_board = [row[:] for row in board]  # Создаем резервную копию
             if event.key == pygame.K_LEFT:
                 # Обработка движения влево
-                slide_left(board)
-                merge_left(board)
-                slide_left(board)
+                move_left(board)
             elif event.key == pygame.K_RIGHT:
                 # Обработка движения вправо
-                slide_right(board)
-                merge_right(board)
-                slide_right(board)
+                move_right(board)
             elif event.key == pygame.K_UP:
                 # Обработка движения вверх
-                transpose_board(board)
-                slide_left(board)
-                merge_left(board)
-                slide_left(board)
-                transpose_board(board)
+                move_up(board)
+
             elif event.key == pygame.K_DOWN:
-                # Обработка движения вниз
-                transpose_board(board)
-                slide_right(board)
-                merge_right(board)
-                slide_right(board)
-                transpose_board(board)
+                move_down(board)
             
             # Проверка доступности хода перед выполнением
             if can_move(temp_board, board):
