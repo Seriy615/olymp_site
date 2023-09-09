@@ -142,14 +142,17 @@ while running:
             # Проверка доступности хода перед выполнением
             if can_move(temp_board, board):
                 add_random_tile(board)
-
-    # Отображение игрового поля
+            else:
+                # Отображение ошибки
+                error_text = font.render("Невозможно сделать ход!", True, (255, 0, 0))
+    # Отображение игрового поля и текста ошибки
     draw_board(board)
+    screen.blit(error_text, error_text_rect)
     pygame.display.flip()
 
     # Проверка условия поражения и завершение игры
     if is_game_over(board):
-        print("Игра окончена. Вы проиграли!")
+        error_text = font.render("Игра окончена. Вы проиграли!", True, (255, 0, 0))
         running = False
 
 pygame.quit()
