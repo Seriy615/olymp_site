@@ -19,10 +19,7 @@ pygame.display.set_caption("2048")
 # Шрифт для текста
 font = pygame.font.Font(None, 36)
 
-# Инициализация игрового поля
-board = [[0] * 4 for _ in range(4)]
-add_random_tile(board)
-add_random_tile(board)
+
 
 # Функция для добавления случайного числа на поле
 def add_random_tile(board):
@@ -30,7 +27,10 @@ def add_random_tile(board):
     if empty_cells:
         i, j = random.choice(empty_cells)
         board[i][j] = random.choice([2, 4])
-
+# Инициализация игрового поля
+board = [[0] * 4 for _ in range(4)]
+add_random_tile(board)
+add_random_tile(board)
 # Отображение игрового поля
 def draw_board(board):
     for i in range(4):
@@ -111,21 +111,25 @@ while running:
                 # Обработка движения влево
                 # Допишите здесь код для движения влево
                 move_left(board)
+                add_random_tile(board)
                 pass
             elif event.key == pygame.K_RIGHT:
                 # Обработка движения вправо
                 # Допишите здесь код для движения вправо
                 move_right(board)
+                add_random_tile(board)
                 pass
             elif event.key == pygame.K_UP:
                 # Обработка движения вверх
                 # Допишите здесь код для движения вверх
                 move_up(board)
+                add_random_tile(board)
                 pass
             elif event.key == pygame.K_DOWN:
                 # Обработка движения вниз
                 # Допишите здесь код для движения вниз
                 move_down(board)
+                add_random_tile(board)
                 pass
 
     # Отображение игрового поля
