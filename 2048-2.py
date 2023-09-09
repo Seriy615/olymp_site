@@ -133,16 +133,14 @@ while running:
                 add_random_tile(board)
             else:
                 # Отображение ошибки
-                error_text = font.render("Невозможно сделать ход!", True, (255, 0, 0))
-                screen.blit(error_text)
+                print("НЕВОЗМОЖНО СДЕЛАТЬ ХОД!!!!!!!")
     # Отображение игрового поля и текста ошибки
     draw_board(board)
     pygame.display.flip()
 
     # Проверка условия поражения и завершение игры
     if is_game_over(board):
-        error_text = font.render("Игра окончена. Вы проиграли!", True, (255, 0, 0))
-        screen.blit(error_text)
+        print('ПРОИГРАЛИ!!!!!!')
         running = False
         time.sleep(2)
 pygame.quit()
