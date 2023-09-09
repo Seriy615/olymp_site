@@ -5,7 +5,7 @@ import time
 
 # Инициализация Pygame
 pygame.init()
-points=0
+
 # Размер окна
 WINDOW_SIZE = (400, 400)
 
@@ -20,17 +20,7 @@ pygame.display.set_caption("2048")
 # Шрифт для текста
 font = pygame.font.Font(None, 36)
 
-# Функция для отображения очков на экране
-def display_points(points):
-    points_text = font.render(f"Очки: {points}", True, text_color)
-    screen.blit(points_text, (10, 410))
 
-# Функция для обновления экрана
-def update_screen():
-    screen.fill((0, 0, 0))  # Очистка экрана
-    display_points(points)  # Отображение очков
-    draw_board(board)
-    pygame.display.flip()
 
 # Функция для добавления случайного числа на поле
 def add_random_tile(board):
@@ -82,8 +72,6 @@ def merge_left(board):
             if row[i] == row[i + 1] and row[i] != 0:
                 row[i] *= 2
                 row[i + 1] = 0
-                points+=50
-                
 
 def move_left(board):
     slide_left(board)
@@ -146,14 +134,13 @@ while running:
             else:
                 # Отображение ошибки
                 print("НЕВОЗМОЖНО СДЕЛАТЬ ХОД!!!!!!!")
-                points-=25
     # Отображение игрового поля и текста ошибки
-    update_screen()
+    draw_board(board)
+    pygame.display.flip()
 
     # Проверка условия поражения и завершение игры
     if is_game_over(board):
         print('ПРОИГРАЛИ!!!!!!')
         running = False
-        points-=200
         time.sleep(2)
 pygame.quit()
