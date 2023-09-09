@@ -1,6 +1,7 @@
 import random
 import pygame
 import pyautogui
+import time
 
 # Инициализация Pygame
 pygame.init()
@@ -133,6 +134,7 @@ while running:
             else:
                 # Отображение ошибки
                 error_text = font.render("Невозможно сделать ход!", True, (255, 0, 0))
+                screen.blit(error_text)
     # Отображение игрового поля и текста ошибки
     draw_board(board)
     pygame.display.flip()
@@ -140,6 +142,7 @@ while running:
     # Проверка условия поражения и завершение игры
     if is_game_over(board):
         error_text = font.render("Игра окончена. Вы проиграли!", True, (255, 0, 0))
+        screen.blit(error_text)
         running = False
-
+        time.sleep(2)
 pygame.quit()
